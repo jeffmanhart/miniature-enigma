@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Facebook Login Test Suite2 Failed Tests">
+  <test verbose="2" name="Facebook_LoginTest2 Failed">
+ 	<classes>
+      <class name="test_Cases.Facebook_Login_Failed"/>
+    </classes>
+  </test> <!-- Default test -->
+</suite> <!-- Default suite -->
+
