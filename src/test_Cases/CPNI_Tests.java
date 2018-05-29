@@ -63,7 +63,7 @@ public class CPNI_Tests{
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		
 		//operation.faceBook_Login();
-		repeatable.user_LoginPrimary("mike_22", "Testing01");
+		repeatable.user_LoginPrimary("xxx_22", "xxxx01");
 		repeatable.close_NotNow();
 		Thread.sleep(8000);
 	
@@ -75,7 +75,7 @@ public class CPNI_Tests{
 				
 		//Edit Contact Info
 		Top_Nav.Profile_Button(driver).click();
-		repeatable.editContactInfo("Testing0298", "Tester123", "3035547854", "c-michael.klemm@charter.com");
+		repeatable.editContactInfo("Testing0298", "Tester123", "3035547854", "c-xxxxx.klemm@charter.com");
 				
 		//Edit Password
 		repeatable.editPasswordInfo("Testing01", "Testing01");
