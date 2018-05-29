@@ -4,6 +4,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -30,15 +31,19 @@ import pageObjects.Support_Page;
 import pageObjects.Top_Nav;
 import utilities.Framework;
 import utilities.UIOperation;
+import utilities.capture_Screenshot;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.Reporter;
 import utilities.BrowserFactory;
+import utilities.EventHandler;
 
 
 
 public class CPNI_Tests{
 
-	WebDriver driver;
+	WebDriver driver; 
+	//WebDriver eventDriver;
 	UIOperation op;
 	Framework op1;
 		
@@ -58,7 +63,7 @@ public class CPNI_Tests{
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		
 		//operation.faceBook_Login();
-		repeatable.user_LoginPrimary("xxx_22", "xxx01");
+		repeatable.user_LoginPrimary("mike_22", "Testing01");
 		repeatable.close_NotNow();
 		Thread.sleep(8000);
 	
@@ -79,17 +84,17 @@ public class CPNI_Tests{
 		repeatable.editSecurityQuestion("Favorite sports team?", "Vikings");
 				
 		//Edit Company Settings Address
-		/*Profile_Page.company_SettingsButton(driver).click();
-		Thread.sleep(2000);
-		Profile_Page.edit_CompanySettingsButton(driver).click();
-		Profile_Page.edit_Address1(driver).clear();
-		Thread.sleep(1000);
-		Profile_Page.edit_Address1(driver).sendKeys("15579 East Prairie Wind Ave");
-		Profile_Page.edit_City(driver).clear();
-		Thread.sleep(1000);
-		Profile_Page.edit_City(driver).sendKeys("Parker");
-		Profile_Page.Save_Billingy(driver).click();
-		Thread.sleep(6000);	*/
+		Profile_Page.company_SettingsButton(driver).click();
+		//Thread.sleep(2000);
+		//Profile_Page.edit_CompanySettingsButton(driver).click();
+		//Profile_Page.edit_Address1(driver).clear();
+		//Thread.sleep(1000);
+		//Profile_Page.edit_Address1(driver).sendKeys("15579 East Prairie Wind Ave");
+		//Profile_Page.edit_City(driver).clear();
+		//Thread.sleep(1000);
+		//Profile_Page.edit_City(driver).sendKeys("Parker");
+		//Profile_Page.Save_Billingy(driver).click();
+		//Thread.sleep(6000);	
 		
 		//Edit Security Code
 		/*Profile_Page.Edit_PinCodeButton(driver).click();
@@ -127,8 +132,7 @@ public class CPNI_Tests{
 	
 		//Find the element Support Button and assert it is displayed 
 		softAssert.assertTrue(Home_Page.Support_Button(driver).isDisplayed());
-		System.out.println("Support Button displayed");
-		
+				
 				
 		//Edit Contact Info
 		Top_Nav.Profile_Button(driver).click();
@@ -210,6 +214,20 @@ public class CPNI_Tests{
 
 @AfterMethod(enabled = true)
 
+	public void testIT(ITestResult result) {
+
+    
+		if(ITestResult.FAILURE==result.getStatus())
+
+			{
+			
+				capture_Screenshot.captureScreenshot(driver, result.getName());
+
+			}	
+
+}
+
+
 	public void log_Out() throws Exception {	
 	
 		UIOperation operation = new UIOperation(driver,op);
@@ -217,55 +235,60 @@ public class CPNI_Tests{
 		operation.user_Logout();
 		
 }
-
+		
+		
+	
 
 
 @BeforeTest(enabled = true)
 
   public void launchBrowser() throws Exception  {
 	
-		WebDriver driver = BrowserFactory.getBrowser("Chrome");
+		//WebDriver driver = BrowserFactory.getBrowser("Chrome");
 	  
 		//Variable Declarations
     	//String baseUrl = "https://www.facebook.com";
-    	//String driverPathc = "C:\\Users\\Mike\\WebDriver\\chromedriver.exe";
+    	String driverPathc = "C:\\Users\\Mike\\WebDriver\\chromedriver.exe";
     	//String driverPathg = "C:\\Users\\Mike\\WebDriver\\geckodriver.exe";
     	//String driverPathi = "C:\\Users\\Mike\\WebDriver\\IEDriverServer.exe";
 	    
-        //System.setProperty("webdriver.chrome.driver", driverPathc);
+        System.setProperty("webdriver.chrome.driver", driverPathc);
     	//System.setProperty("webdriver.gecko.driver", driverPathg);
     	//System.setProperty("webdriver.ie.driver", driverPathi);	  	  
 	  
     	//Browser options		  
-    	//Map<String, Object> prefs = new HashMap<String, Object>();		  
+    	Map<String, Object> prefs = new HashMap<String, Object>();		  
     	//Turns off download prompt, To Stop Save password prompts
-    	//prefs.put("download.prompt_for_download", false);
-    	//prefs.put("credentials_enable_service", false);	
-    	//prefs.put("password_manager_enabled", false);
+    	prefs.put("download.prompt_for_download", false);
+    	prefs.put("credentials_enable_service", false);	
+    	prefs.put("password_manager_enabled", false);
       
-    	//ChromeOptions chromeOptions = new ChromeOptions();      
-    	//chromeOptions.addArguments("chrome.switches","--disable-extensions");
-    	//chromeOptions.addArguments("disable-popup-blocking");
-    	//chromeOptions.addArguments("--disable-notifications");
-    	//chromeOptions.addArguments("disable-infobars");
-    	//chromeOptions.addArguments("--start-maximized");
-    	//chromeOptions.setExperimentalOption("prefs", prefs);
-    	//chromeOptions.addArguments("--test-type");
+    	ChromeOptions chromeOptions = new ChromeOptions();      
+    	chromeOptions.addArguments("chrome.switches","--disable-extensions");
+    	chromeOptions.addArguments("disable-popup-blocking");
+    	chromeOptions.addArguments("--disable-notifications");
+    	chromeOptions.addArguments("disable-infobars");
+    	chromeOptions.addArguments("--start-maximized");
+    	chromeOptions.setExperimentalOption("prefs", prefs);
+    	chromeOptions.addArguments("--test-type");
       	  
     	// Create a new instance of the driver	
-    	//driver = new ChromeDriver(chromeOptions);
+    	driver = new ChromeDriver(chromeOptions);
+    	//EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
+    	//EventHandler handler = new EventHandler();
+		//eventDriver.register(handler);
     	//driver = new FirefoxDriver();
     	//driver = new InternetExplorerDriver();
       
     	//Put a Implicit wait, this means that any search for elements on the page could take the time the implicit wait is set for before throwing exception
-    	//driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+    	driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     	//driver.manage().window().maximize();
       
     	//Launch Spectrum Website
     	driver.navigate().to("https://www.spectrumbusiness.net");
     	//driver.get(baseUrl);
               
-    	//driver.manage().window().maximize(); 
+    	 
 }
 
 

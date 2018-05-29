@@ -7,7 +7,9 @@
         <methods>
           <include name="CPNI_SpectrumPrimary"/>
           <include name="launchBrowser"/>
+          <include name="tearDown"/>
           <include name="verifyLoginpageTitle"/>
+          <include name="testIT"/>
         </methods>
       </class> <!-- test_Cases.CPNI_Tests -->
     </classes>
